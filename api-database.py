@@ -40,29 +40,19 @@ def get_db():
     finally:
         db.close()
 
-# ----------------------------------
-# Configuration & Initialization
-# ----------------------------------
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-if not OPENAI_API_KEY:
-    raise ValueError("OPENAI_API_KEY is not set in the environment (.env file)")
-
-# ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY")
-# if not ANTHROPIC_API_KEY:
-#     raise ValueError("ANTHROPIC_API_KEY is not set in the environment (.env file)")
-
-PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
-if not PINECONE_API_KEY:
-    raise ValueError("ANTHROPIC_API_KEY is not set in the environment (.env file)")
-
-INDEX_NAME = "aban-rag-ft1"
-
-# Initialize the OpenAI client using your API key.
 client = OpenAI(api_key="OPENAI_API_KEY")
 
 # PINECONE_API_KEY = "pcsk_44Uird_RSvvs6T6jZwYnmUF3ySv6PshNLY2zfvJEtTjY9nHwTzbWtaCqp6dYaJt3ieK4Jm"
-pc = Pinecone(api_key=PINECONE_API_KEY)
+# PINECONE_API_KEY = os.getenv("PINECONE_API_KEY")
+# pc = Pinecone(api_key=PINECONE_API_KEY)
+
+
+INDEX_NAME = "aban-rag-ft2-faq-v1-1"
+
+
+
 # Wait until the index is ready.
 while not pc.describe_index(INDEX_NAME).status.get('ready', False):
     time.sleep(1)
@@ -72,9 +62,6 @@ index = pc.Index(INDEX_NAME)
 ft_model = SentenceTransformer("/home/shahriar/Work/AbanTether/raggpt/pincone_RAG/embedded_fintune/my_finetuned_faq_model_faq_2_pair")
 print("Fine-tuned model dimension:", ft_model.get_sentence_embedding_dimension())
 
-# ----------------------------------
-# Helper Functions
-# ----------------------------------
 
 def get_embedding(text: str) -> list:
     """Generates an embedding for the given text using the fine-tuned model."""

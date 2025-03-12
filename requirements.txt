@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+python-dotenv
+openai
+anthropic
+transformers
+torch
+opencv-python-headless
+PyMuPDF
+numpy
